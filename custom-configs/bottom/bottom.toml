@@ -1,1 +1,29 @@
+[flags]
+basic = true
+process_sorting = "cpu"
+network_use_bytes = false
+update_rate_in_milliseconds = 1000
+disable_temperature = true
+disable_disk = true
 
+[styles]
+theme = "nord"
+
+[colors]
+table_header_color = "#88C0D0"        # nord8
+cpu_color = "#81A1C1"                 # nord9
+mem_color = "#A3BE8C"                 # nord14
+swap_color = "#B48EAD"                # nord15
+rx_color = "#8FBCBB"                  # nord7
+tx_color = "#D08770"                  # nord12
+widget_title_color = "#D8DEE9"        # nord4
+border_color = "#4C566A"              # nord3
+highlighted_border_color = "#88C0D0"  # nord8
+text_color = "#ECEFF4"                # nord6
+graph_color = "#88C0D0"               # nord8
+selected_text_color = "#2E3440"       # nord0
+selected_bg_color = "#88C0D0"         # nord8
+
+[processes]
+# Columnas visibles en la tabla de procesos
+columns = ["PID", "Name", "CPU%", "Mem%", "User", "Time"]
