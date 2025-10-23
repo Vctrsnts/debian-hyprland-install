@@ -65,36 +65,36 @@ log_success "Instalando drivers NVIDIA y firmware..."
 apt_install nvidia-driver firmware-misc-nonfree
 
 log_success "Creando archivo para blacklist de nouveau..."
-cat << EOF > /etc/modprobe.d/blacklist-nouveau.conf
+sudo tee /etc/modprobe.d/blacklist-nouveau.conf > /dev/null << EOF
 blacklist nouveau
 options nouveau modeset=0
 EOF
 
 log_success "Actualizando initramfs..."
-update-initramfs -u
+sudo update-initramfs -u
 
 log_success "Configurando parámetro de kernel para nvidia-drm.modeset=1 en GRUB..."
 
 GRUB_FILE="/etc/default/grub"
 BACKUP_FILE="/etc/default/grub.bak.$(date +%F-%T)"
 
-cp "$GRUB_FILE" "$BACKUP_FILE"
+sudo cp "$GRUB_FILE" "$BACKUP_FILE"
 log_success "Backup de grub creado en $BACKUP_FILE"
 
 if grep -q "nvidia-drm.modeset=1" "$GRUB_FILE"; then
   log_success "Parámetro nvidia-drm.modeset=1 ya está presente en GRUB_CMDLINE_LINUX_DEFAULT."
 else
-  sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1 nvidia-drm.modeset=1"/' "$GRUB_FILE"
+  sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1 nvidia-drm.modeset=1"/' "$GRUB_FILE"
   log_success "Parámetro añadido a GRUB_CMDLINE_LINUX_DEFAULT."
 fi
 
 log_success "Actualizando GRUB..."
-update-grub
+sudo update-grub
 
 log_success "Instalando Hyprland y paquetes relacionados..."
 
 pkgs=(
-  hyprland hyprpaper waybar mako nwg-look greetd gtkgreet
+  hyprland hyprpaper waybar nwg-look greetd gtkgreet
   mako-notifier wayland-protocols xwayland
   wofi polkitd lxpolkit
   acpi acpid eza mc 
