@@ -116,10 +116,10 @@ sudo systemctl enable acpid
 mod_terminal
 
 log_success "Creando directorio de configuración de Hyprland..."
-mkdir -p ~/.config/hypr
+# mkdir -p ~/.config/hypr
 
 log_success "Copiando scripts de configuración de Hyprland en ~/.config/hypr/hyprland.conf..."
 
-cp -r ~/debian-hyprland-install/custom-configs/hypr ~/.config/hypr
+cp -r ~/debian-hyprland-install/custom-configs/hypr ~/.config
 
 log_success "Script finalizado. Es recomendable reiniciar para aplicar todos los cambios."
