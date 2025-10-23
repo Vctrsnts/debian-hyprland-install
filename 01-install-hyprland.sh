@@ -121,20 +121,9 @@ cp -r ~/debian-hyprland-install/custom-configs/hypr ~/.config
 log_success "Copiando scripts de configuración de Greetd en /etc/greetd"
 cp -r ~/debian-hyprland-install/custom-configs/backgrounds ~/.config
 
-log_success "Procedim a copia el wallpaper de gtkgreet"
-sudo mkdir -p /usr/share/backgrounds
-sudo mv $HOME/.config/backgrounds/login.jpg /usr/share/backgrounds/login.jpg
-sudo chmod 644 /usr/share/backgrounds/login.jpg
-sudo chown -R root:root /usr/share/backgrounds/login.jpg
-
 log_success "Copiando scripts de configuración de Greetd en /etc/greetd"
 sudo cp -r ~/debian-hyprland-install/custom-configs/greetd /etc/greetd
 
-log_success "Desinstalem paquets que ja no es faran servir"
-pkgs=(
-  git
-)
-apt_purge "${pkgs[@]}"
 sudo apt -y autoremove
 
 log_success "Procedim a moure iconos Adwaita"
