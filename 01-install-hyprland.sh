@@ -58,13 +58,11 @@ mod_terminal(){
   log_success "🎉 WezTerm instalado correctamente."
 }
 
-echo "Actualizando lista de paquetes..."
-sudo apt update
+log_success "=== Preparando entorno para compilar módulos NVIDIA ==="
+# Instalar headers del kernel actual y herramientas de compilación
+apt_install linux-headers-$(uname -r) build-essential dkms
 
-log_success "Instalando drivers NVIDIA y firmware..."
-apt_install nvidia-driver firmware-misc-nonfree
-
-log_success "Creando archivo para blacklist de nouveau..."
+log_success "=== Desactivando driver nouveau ==="
 sudo tee /etc/modprobe.d/blacklist-nouveau.conf > /dev/null << EOF
 blacklist nouveau
 options nouveau modeset=0
@@ -73,13 +71,18 @@ EOF
 log_success "Actualizando initramfs..."
 sudo update-initramfs -u
 
-log_success "Configurando parámetro de kernel para nvidia-drm.modeset=1 en GRUB..."
+log_success "=== Habilitando repositorios contrib y non-free ==="
+sudo sed -i 's/main/main contrib non-free non-free-firmware/g' /etc/apt/sources.list
 
+log_success "Configurando parámetro de kernel para nvidia-drm.modeset=1 en GRUB..."
 GRUB_FILE="/etc/default/grub"
 BACKUP_FILE="/etc/default/grub.bak.$(date +%F-%T)"
 
 sudo cp "$GRUB_FILE" "$BACKUP_FILE"
 log_success "Backup de grub creado en $BACKUP_FILE"
+
+log_success "=== Instalando drivers propietarios de NVIDIA ==="
+apt_install nvidia-driver firmware-misc-nonfree nvidia-settings nvidia-smi
 
 if grep -q "nvidia-drm.modeset=1" "$GRUB_FILE"; then
   log_success "Parámetro nvidia-drm.modeset=1 ya está presente en GRUB_CMDLINE_LINUX_DEFAULT."
@@ -90,6 +93,8 @@ fi
 
 log_success "Actualizando GRUB..."
 sudo update-grub
+
+log_success "=== Instalación completada. Reinicia el sistema para aplicar los cambios. ==="
 
 log_success "Instalando Hyprland y paquetes relacionados..."
 
