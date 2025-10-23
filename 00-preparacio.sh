@@ -92,4 +92,10 @@ sudo apt -y modernize-sources
 log_success "Eliminamos aplicacion aptitude"
 sudo apt purge -y aptitude w3m task-laptop task-spanish && sudo apt -y autoremove
 
+log_success "Actualització de la imatge del kernel"
+apt_install linux-image-6.16.12+deb14+1-amd64
+
+log_success "Es reinicia el sistema"
+sudo shutdown -r now
+
 exit 0
