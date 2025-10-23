@@ -1,0 +1,70 @@
+window {
+  background-image: url("file:///usr/share/backgrounds/login.jpg");
+  background-size: cover;
+  background-position: center;
+  /* Tipografía general */
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11pt;
+  color: #D8DEE9; /* texto claro */
+}
+
+entry, button {
+  background-color: #2E3440; /* Nordic base */
+  color: #D8DEE9;
+}
+
+button:hover {
+  background-color: #88C0D0; /* acento Nordic */
+}
+
+/**
+ Contenedor principal del formulario 
+box#body {
+  background-color: rgba(46, 52, 64, 0.75);
+  border-radius: 12px;
+  padding: 48px;
+}
+
+Entradas y botones con estética Nordic
+entry, button {
+  background-color: #2E3440;
+  color: #D8DEE9;
+  border: 1px solid #4C566A;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+Placeholder de las entradas
+entry placeholder {
+  color: #9CA3AF;
+}
+
+Enfoque y selección
+entry:focus {
+  border-color: #88C0D0;
+}
+selection, text selection {
+  background-color: #88C0D0;
+  color: #2E3440;
+}
+
+Botón hover/active 
+button:hover {
+  background-color: #3B4252;
+  border-color: #88C0D0;
+}
+button:active {
+  background-color: #434C5E;
+}
+
+Mensajes de error/alerta si el greeter los expone
+label.error, .error, .warning {
+  color: #BF616A;
+}
+
+Ajustes opcionales de espaciado
+box, grid {
+  padding: 6px;
+  spacing: 8px;
+}
+*/
