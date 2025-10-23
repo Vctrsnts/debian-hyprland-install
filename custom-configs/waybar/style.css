@@ -1,0 +1,138 @@
+/* Fuente y estilo base */
+* {
+  font-family: "JetBrainsMono", "Hack", "RobotoMono", "SourceCodePro", monospace;
+  font-size: 12px;
+  min-height: 0;
+  padding: 2px 4px;
+  color: #ECEFF4; /* Nord Snow */
+}
+
+window#waybar {
+  background: #2E3440; /* Nord Polar Night */
+  border-bottom: 1px solid #4C566A;
+  transition-duration: .2s;
+  transition-property: background-color;
+}
+
+/* --- Workspaces --- */
+#workspaces button {
+  background: transparent;
+  color: #D8DEE9;
+  margin: 2px 4px;
+  opacity: 0.7;
+  border-radius: 12px;
+  padding: 2px 8px;
+}
+#workspaces button.focused {
+  background: #4C566A;
+  color: #ECEFF4;
+  opacity: 0.9;
+}
+#workspaces button.urgent {
+  background-color: #BF616A; /* Nord Red */
+}
+#workspaces button:hover {
+  background: #3B4252;
+  border-bottom: 1px solid #88C0D0; /* Nord Cyan */
+  color: #ECEFF4;
+}
+
+/* --- Sway Mode --- */
+#mode {
+  background: #3B4252;
+  color: #EBCB8B; /* Nord Yellow */
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin: 2px 4px;
+}
+
+/* --- Audio --- */
+#custom-audio {
+  background: #3B4252;
+  color: #88C0D0; /* Nord Cyan */
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin: 2px 4px;
+  opacity: 0.85;
+}
+
+/* --- System (CPU + RAM + Disk) --- */
+#custom-system {
+  background: #3B4252;
+  color: #A3BE8C; /* Nord Green */
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin: 2px 4px;
+  opacity: 0.9;
+}
+
+/* --- Network --- */
+#network {
+  background: #3B4252;
+  color: #88C0D0;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin: 2px 4px;
+}
+#network.disconnected {
+  background: #3B4252;
+  color: #BF616A;
+}
+
+/* --- Clock --- */
+#clock {
+  background: #3B4252;
+  color: #ECEFF4;
+  margin: 2px 4px;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* --- Tray --- */
+#tray {
+  background: #3B4252;
+  color: #ECEFF4;
+  margin: 2px 4px;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  color: #EBCB8B;
+}
+
+/* --- Notifications --- */
+#custom-notifications {
+  background: #3B4252;
+  color: #EBCB8B; /* Nord Yellow */
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin: 2px 4px;
+  opacity: 0.9;
+}
+
+/* --- Battery (si lo usas en portátil) --- */
+#battery {
+  background: #3B4252;
+  color: #A3BE8C;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin: 2px 4px;
+}
+#battery.charging, #battery.plugged {
+  color: #EBCB8B;
+}
+#battery.critical:not(.charging) {
+  background-color: #BF616A;
+  color: #ECEFF4;
+  animation: blink 0.5s linear infinite alternate;
+}
+
+/* Animación de parpadeo para batería crítica */
+@keyframes blink {
+  from { opacity: 1; }
+  to { opacity: 0.3; }
+}
