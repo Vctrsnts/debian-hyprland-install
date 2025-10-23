@@ -79,33 +79,8 @@ pkgs=(
 sudo apt purge -y "${pkgs[@]}"
 sudo apt -y autoremove
 
-log_info "Abriendo aptitude para revisión manual. Cuando termines, se continuará con la instalación de Git y el repositorio."
-
-# Instalamos aptitude para el triaje de paquetes
-# sudo apt install -y aptitude
-
-# sudo aptitude
-
-# === 2. Instalar dependencias de compilación ===
-# sudo apt install -y --no-install-recommends wget curl gpg unzip
-
-# =======================
-# Descarreguem el ZIP que conte el instalado
-# =======================
-# Nombre del repositorio en formato usuario/repositorio
-#log_success "Iniciem la descarrega dels script"
-#REPO="Vctrsnts/debian-installer-sway"
-#LATEST_TAG=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-#ZIP_URL="https://github.com/$REPO/archive/refs/tags/$LATEST_TAG.zip"
-#ZIP_FILE="debian-installer-sway.zip"
-#TARGET_FOLDER="debian-installer-sway"
-
-# wget https://github.com/Vctrsnts/debian-installer-sway/archive/refs/tags/v20250827205721.zip
-
-# Descargar el ZIP con nombre personalizado
-wget -O "$ZIP_FILE" "$ZIP_URL"
-
-log_success "Finalitzacio de la descarrega dels script"
+log_success "Copiem scripts instalació"
+git clone https://github.com/Vctrsnts/debian-hyprland-install.git
 
 log_success "Se ejecuta la actualización del funcionamiento de los sources"
 sudo apt -y modernize-sources
@@ -113,7 +88,7 @@ sudo apt -y modernize-sources
 log_success "Eliminamos aplicacion aptitude"
 sudo apt purge -y aptitude w3m task-laptop task-spanish && sudo apt -y autoremove
 
-log_success "Instalem aplicacions wireless"
-sudo apt install -y iw wireless-tools wpasupplicant wireless-regdb
+#log_success "Instalem aplicacions wireless"
+#sudo apt install -y iw wireless-tools wpasupplicant wireless-regdb
 
 exit 0
