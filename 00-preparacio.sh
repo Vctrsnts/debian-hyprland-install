@@ -79,7 +79,11 @@ pkgs=(
 sudo apt purge -y "${pkgs[@]}"
 sudo apt -y autoremove
 
+log_success "Instalem aplicacions git"
+sudo apt install -y git
+
 log_success "Copiem scripts instalació"
+
 git clone https://github.com/Vctrsnts/debian-hyprland-install.git
 
 log_success "Se ejecuta la actualización del funcionamiento de los sources"
@@ -87,8 +91,5 @@ sudo apt -y modernize-sources
 
 log_success "Eliminamos aplicacion aptitude"
 sudo apt purge -y aptitude w3m task-laptop task-spanish && sudo apt -y autoremove
-
-#log_success "Instalem aplicacions wireless"
-#sudo apt install -y iw wireless-tools wpasupplicant wireless-regdb
 
 exit 0
