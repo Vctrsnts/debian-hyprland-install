@@ -97,7 +97,7 @@ pkgs=(
   hyprland hyprpaper waybar nwg-look greetd gtkgreet
   mako-notifier wayland-protocols xwayland
   wofi polkitd lxpolkit
-  acpi acpid eza mc 
+  acpi acpid eza 
   pulseaudio pulseaudio-utils pamixer
   pavucontrol 
   curl gpg unzip 
