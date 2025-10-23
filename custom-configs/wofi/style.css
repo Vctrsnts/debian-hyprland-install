@@ -1,0 +1,63 @@
+/* Wofi Nordic-Dark (oscuro) */
+
+/* Caja de entrada */
+#input {
+  margin: 10px;
+  border: none;
+  background-color: #3B4252; /* fondo oscuro */
+  color: #ECEFF4;            /* texto claro */
+}
+
+/* Contenedor de resultados */
+#inner-box {
+  margin: 5px;
+  border: none;
+  background-color: #2E3440;
+  color: #E5E9F0;
+}
+
+/* Contenedor general interno */
+#outer-box {
+  margin: 5px;
+  border: none;
+  background-color: #2E3440;
+}
+
+/* Cada ítem de texto en resultados */
+#text {
+  margin: 5px;
+  border: none;
+  background-color: transparent;
+  color: #E5E9F0;
+}
+
+/* Estado hover */
+#entry:hover {
+  background-color: #434C5E; /* gris oscuro Nord */
+  color: #ECEFF4;
+}
+
+/* Estado seleccionado */
+#entry:selected {
+  background-color: #88C0D0; /* acento Nord */
+  color: #2E3440;
+}
+
+/* Ocultar el icono de búsqueda */
+#input > image.left {
+  -gtk-icon-transform: scaleX(0);
+}
+
+/* Área de scroll */
+#scroll {
+  margin: 5px;
+  border: 2px solid #2E3440;
+  background-color: #2E3440;
+}
+
+/* Ventana principal */
+window {
+  margin: 15px;
+  border: 2px solid #4C566A;
+  background-color: #2E3440;
+}

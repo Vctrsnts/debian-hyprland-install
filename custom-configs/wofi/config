@@ -1,1 +1,9 @@
-
+allow_images=true
+image_size=48
+width=800
+height=1000
+insensitive=true
+mode=drun,run
+columns=1
+padding:5
+lines=10
