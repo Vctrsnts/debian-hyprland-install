@@ -1,1 +1,2 @@
-
+#!/bin/bash
+exec waybar -c $HOME/.config/waybar/config-sway -s $HOME/.config/waybar/style.css
