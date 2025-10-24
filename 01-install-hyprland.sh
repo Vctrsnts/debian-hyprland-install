@@ -57,6 +57,24 @@ mod_terminal(){
 
   log_success "🎉 WezTerm instalado correctamente."
 }
+mod_librewolf(){
+  log_info "Añadiendo el repositorio de WezTerm e instalando..."
+  ! [ -d /etc/apt/keyrings ] && sudo mkdir -p /etc/apt/keyrings && sudo chmod 755 /etc/apt/keyrings
+  
+  log_info "Descargando y guardando clave gpg..."
+  wget -O- https://download.opensuse.org/repositories/home:/bgstack15:/aftermozilla/Debian_Unstable/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/home_bgstack15_aftermozilla.gpg
+  
+  log_info "Añadiendo source..."
+  
+  sudo tee /etc/apt/sources.list.d/home_bgstack15_aftermozilla.sources << EOF > /dev/null
+Types: deb
+URIs: https://download.opensuse.org/repositories/home:/bgstack15:/aftermozilla/Debian_Unstable/
+Suites: /
+Signed-By: /etc/apt/keyrings/home_bgstack15_aftermozilla.gpg
+EOF
+
+  apt_install librewolf
+}
 
 log_success "=== Preparando entorno para compilar módulos NVIDIA ==="
 # Instalar headers del kernel actual y herramientas de compilación

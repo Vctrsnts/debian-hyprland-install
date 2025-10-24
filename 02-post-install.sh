@@ -37,10 +37,12 @@ mod_fuentes() {
 
   local FONT_DIR="$USER_HOME/.local/share/fonts"
   ensure_dirs_user "$FONT_DIR"
+  
+  local font = "SourceCodePro"
 
   echo "⬇️ Descargando fuente: $font"
-  local URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/SourceCodePro.zip"
-  local ZIP_PATH="/tmp/${font}.zip"
+  local URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/$font.zip"
+  local ZIP_PATH="/tmp/$font.zip"
 
   if ! wget -q --show-progress "$URL" -O "$ZIP_PATH"; then
     echo "⚠️ Fallo al descargar $font desde $URL; se omite."
