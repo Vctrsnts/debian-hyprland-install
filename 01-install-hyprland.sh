@@ -137,6 +137,8 @@ sudo systemctl enable acpid
 
 mod_terminal
 
+mod_librewolf
+
 log_success "Copiando scripts de configuración de Hyprland en ~/.config/hypr/hyprland.conf..."
 cp -r ~/debian-hyprland-install/custom-configs/hypr ~/.config
 
