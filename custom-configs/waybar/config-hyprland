@@ -26,7 +26,7 @@
     "custom/resources",
     "custom/thermal",
   ],
-  "modules-center": ["hyprland/workspaces", "sway/mode"],
+  "modules-center": ["hyprland/workspaces", "hyprland/mode"],
   "modules-right": [
     "custom/updates",
     "custom/trash",
@@ -54,7 +54,7 @@
     }
   },
 
-  "sway/mode": {
+  "hyprland/mode": {
     "format": " {mode}"
   },
   "network": {
