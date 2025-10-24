@@ -15,6 +15,9 @@ if wezterm.config_builder then config = wezterm.config_builder() end
 --- Default Program Settings
 config.default_prog = {"/bin/bash"}
 
+--- Disable wayland
+config.enable_wayland = false
+
 --- Color Settings
 config.color_scheme = "Tokyo Night"
 config.colors = {
