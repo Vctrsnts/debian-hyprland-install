@@ -71,8 +71,8 @@ EOF
 log_success "Actualizando initramfs..."
 sudo update-initramfs -u
 
-log_success "=== Habilitando repositorios contrib y non-free ==="
-sudo sed -i 's/main/main contrib non-free non-free-firmware/g' /etc/apt/sources.list
+# log_success "=== Habilitando repositorios contrib y non-free ==="
+# sudo sed -i 's/main/main contrib non-free non-free-firmware/g' /etc/apt/sources.list
 
 log_success "Configurando parámetro de kernel para nvidia-drm.modeset=1 en GRUB..."
 GRUB_FILE="/etc/default/grub"
@@ -101,15 +101,14 @@ log_success "Instalando Hyprland y paquetes relacionados..."
 pkgs=(
   hyprland hyprpaper waybar nwg-look greetd gtkgreet
   mako-notifier wayland-protocols xwayland
-  wofi polkitd lxpolkit
+  wofi polkitd lxpolkit hypridle
   acpi acpid eza 
   pulseaudio pulseaudio-utils pamixer
-  pavucontrol 
-  curl gpg unzip 
+  pavucontrol curl gpg unzip 
   thunar gvfs gvfs-backends udisks2
   xdg-user-dirs xdg-utils 
   libpam0g libseat1 fastfetch
-  libnotify-bin
+  libnotify-bin libgles-nvidia2
   gsettings-desktop-schemas 
 )
 
