@@ -14,7 +14,14 @@ window#waybar {
   transition-property: background-color;
 }
 
-/* --- Workspaces --- */
+/* --- Workspace container --- */
+#workspaces {
+  background: #3B4252;
+  color: #88C0D0;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin: 2px 4px;
+}
 #workspaces button {
   background: transparent;
   color: #D8DEE9;
@@ -36,7 +43,6 @@ window#waybar {
   border-bottom: 1px solid #88C0D0; /* Nord Cyan */
   color: #ECEFF4;
 }
-
 /* --- Sway Mode --- */
 #mode {
   background: #3B4252;
@@ -45,27 +51,77 @@ window#waybar {
   border-radius: 12px;
   margin: 2px 4px;
 }
-
-/* --- Audio --- */
-#custom-audio {
+/* --- Audio & Bluetooth --- */
+#custom-bluetooth {
+  background: #3B4252;   /* fondo Nord */
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin: 2px 4px;
+  font-family: monospace;
+  opacity: 0.85;
+}
+#custom-bluetooth.off {
+  color: #888888; /* gris Nord tenue cuando está apagado */
+}
+#custom-bluetooth.on {
+  color: #81A1C1; /* azul Nord resaltado cuando está encendido */
+}
+/* --- System (CPU + RAM + Disk + Temperature) --- */
+#custom-resources {
   background: #3B4252;
   color: #88C0D0; /* Nord Cyan */
   padding: 2px 8px;
   border-radius: 12px;
   margin: 2px 4px;
-  opacity: 0.85;
+  font-family: monospace;
 }
-
-/* --- System (CPU + RAM + Disk) --- */
-#custom-system {
+#custom-thermal {
   background: #3B4252;
-  color: #A3BE8C; /* Nord Green */
+  color: #EBCB8B;
   padding: 2px 8px;
   border-radius: 12px;
   margin: 2px 4px;
-  opacity: 0.9;
+  font-family: monospace;
 }
 
+#custom-thermal.hot {
+  color: #BF616A; /* Nord Red */
+  font-weight: bold;
+}
+/* --- Updates --- */
+#custom-updates {
+  background: #3B4252;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin: 2px 4px;
+  font-family: monospace;
+}
+#custom-updates.normal {
+  color: #888888; /* gris tenue cuando no hay nada */
+}
+#custom-updates.default {
+  color: #A3BE8C; /* verde normal cuando hay pocas updates */
+}
+#custom-updates.many-updates {
+  color: #D08770; /* naranja si hay muchas */
+}
+/* --- Trash --- */
+#custom-trash {
+  background: #3B4252;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin: 2px 4px;
+  font-family: monospace;
+}
+#custom-trash.normal {
+  color: #888888; /* gris tenue cuando está vacía */
+}
+#custom-trash.default {
+  color: #A3BE8C; /* verde normal cuando hay pocos ficheros */
+}
+#custom-trash.many-trash {
+  color: #EBCB8B; /* amarillo si hay muchos */
+}
 /* --- Network --- */
 #network {
   background: #3B4252;
@@ -107,32 +163,12 @@ window#waybar {
 /* --- Notifications --- */
 #custom-notifications {
   background: #3B4252;
-  color: #EBCB8B; /* Nord Yellow */
-  padding: 2px 8px;
-  border-radius: 12px;
-  margin: 2px 4px;
-  opacity: 0.9;
-}
-
-/* --- Battery (si lo usas en portátil) --- */
-#battery {
-  background: #3B4252;
   color: #A3BE8C;
   padding: 2px 8px;
   border-radius: 12px;
   margin: 2px 4px;
 }
-#battery.charging, #battery.plugged {
-  color: #EBCB8B;
-}
-#battery.critical:not(.charging) {
-  background-color: #BF616A;
-  color: #ECEFF4;
-  animation: blink 0.5s linear infinite alternate;
-}
 
-/* Animación de parpadeo para batería crítica */
-@keyframes blink {
-  from { opacity: 1; }
-  to { opacity: 0.3; }
+#custom-notifications:hover {
+  color: #EBCB8B;
 }

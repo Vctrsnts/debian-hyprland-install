@@ -1,0 +1,116 @@
+//====================================================================================================//
+// Waybar Configuration File                                                                          //
+//----------------------------------------------------------------------------------------------------//
+// Purpose: Creates a minimalistic (yet functional) waybar at                                         //
+// the top of the screen.                                                                             //
+// themes and colors, set the wallpaper, and more.                                                    //
+//                                                                                                    //
+// License: Creative Commons Attribution 4.0 International                                            //
+//                                                                                                    //
+// Credit:                                                                                            //
+// Battery section adapted from:                                                                      //
+// https://github.com/Egosummiki/dotfiles/blob/master/waybar/config                                   //
+//                                                                                                    //
+// Pipewire audio adapted from:                                                                       //
+// https://www.reddit.com/r/swaywm/comments/sks343/pwvolume_pipewire_volume_control_and_waybar_module //
+//====================================================================================================//
+{
+  "layer": "top",
+  "position": "top",
+  "height": 28,
+  "spacing": 4,
+
+  // Orden de módulos
+  "modules-left": [
+    "network",
+    "custom/resources",
+    "custom/thermal",
+  ],
+  "modules-center": ["hyprland/workspaces", "sway/mode"],
+  "modules-right": [
+    "custom/updates",
+    "custom/trash",
+    "clock",
+    "tray",
+    "custom/notifications"
+  ],
+
+  // --- Configuración de módulos ---
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": false,
+    "format": "{icon}",
+    "format-icons": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "6": "",
+        "7": "",
+        "8": "",
+        "9": "",
+        "10": ""
+    }
+  },
+
+  "sway/mode": {
+    "format": " {mode}"
+  },
+  "network": {
+    "format-disconnected": "󰈀 Sin red",
+    "tooltip-format-disconnected": "Disconnected",
+    "format-ethernet": "",
+    "format-disconnected": "󰈀 Sin red",
+    "tooltip-format-ethernet": " IP: {ipaddr}\n Interface: {ifname}\n Gateway: {gwaddr}\n {bandwidthUpBytes}  {bandwidthDownBytes}",
+    "tooltip": true
+  },
+  "custom/resources": {
+    "format": "{}",
+    "exec": "~/.config/waybar/scripts/sys-resources.sh",
+    "interval": 5,
+    "on-click": "alacritty -e btm"
+  },
+  "custom/thermal": {
+    "exec": "~/.config/waybar/scripts/sys-thermal.sh",
+    "interval": 10,
+    "return-type": "json",
+    "format": "{}"
+  },
+  "custom/updates": {
+    "exec": "~/.config/waybar/scripts/sys-updates.sh",
+    "interval": 900,
+    "return-type": "json",
+    "format": "{}"
+  },
+  "custom/trash": {
+    "exec": "~/.config/waybar/scripts/sys-trash.sh",
+    "interval": 30,
+    "return-type": "json",
+    "format": "{}"
+  },
+  "clock": {
+    "format": "{:%d %b %H:%M}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+  "tray": {
+    "icon-size": 18,
+    "spacing": 10
+  },
+  "custom/notifications": {
+    "exec": "
+      total=$(makoctl list | grep -c '^Notification');
+      urgent=$(makoctl list | grep -c 'Urgency: critical');
+      if [ \"$urgent\" -gt 0 ]; then
+        echo \" $total\";
+      elif [ \"$total\" -gt 0 ]; then
+        echo \" $total\";
+      else
+        echo \"\";
+      fi
+    ",
+    "on-click": "makoctl dismiss -a",
+    "interval": 1,
+    "format": "{}"
+  }
+}
