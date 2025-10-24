@@ -10,8 +10,7 @@ vt = 7
 # with whatever you want started, such as `sway`.
 #command = "/usr/sbin/agreety --cmd '${SHELL:-/bin/sh}'"
 # if using wlgreet
-# command = "sway --config /etc/greetd/sway-config"
-command = "hyprland --config /etc/greetd/hyprland.conf"
+command = "sway --config /etc/greetd/sway-config"
 
 # The user to run the command as. The privileges this user must have depends
 # on the greeter. A graphical greeter may for example require the user to be
