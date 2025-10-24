@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Dirección MAC de los auriculares
+MAC="84:0F:2A:9A:3D:E5"
+
+# Icono de Bluetooth (Nerd Font / Font Awesome)
+ICON=""
+
+# Verifica si el adaptador está encendido
+POWERED=$(bluetoothctl show | grep "Powered: yes")
+
+# Verifica si están conectados
+CONNECTED=$(bluetoothctl info "$MAC" | grep "Connected: yes")
+
+if [ -n "$POWERED" ]; then
+    CLASS="on"
+    if [ -n "$CONNECTED" ]; then
+        # Batería desde journalctl
+        BATTERY=$(journalctl --user -n 50 | grep "Battery Level" | tail -n1 | sed -n 's/.*Battery Level: \([0-9]\+\)%.*/\1/p')
+
+        # Volumen actual
+        VOLUME=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -o '[0-9]\+%' | head -n1)
+
+        TOOLTIP="Auriculares conectados - ${BATTERY}%  ${VOLUME}"
+    else
+        TOOLTIP="Bluetooth encendido (no conectado)"
+    fi
+else
+    CLASS="off"
+    TOOLTIP="Bluetooth apagado"
+fi
+
+# Salida JSON para waybar
+echo "{\"text\": \"$ICON\", \"tooltip\": \"$TOOLTIP\", \"class\": \"$CLASS\"}"
+

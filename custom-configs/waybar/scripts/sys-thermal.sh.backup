@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# CPU temperature (°C)
+#temp_raw=$(cat /sys/class/hwmon/hwmon1/temp1_input 2>/dev/null)
+temp_raw=$(sensors | awk '/^Package id 0:/ {print int($4)}')
+
+if [[ -n "$temp_raw" ]]; then
+  temp_c=$(echo "$temp_raw / 1000" | bc)
+  temp_icon=""
+else
+  temp_c="?"
+  temp_icon=""
+fi
+
+# Clase CSS si temperatura alta
+if [[ "$temp_c" != "?" && "$temp_c" -ge 70 ]]; then
+  class="hot"
+else
+  class="normal"
+fi
+
+echo "{\"text\": \"$temp_icon ${temp_c}°C\", \"class\": \"$class\"}"

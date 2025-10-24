@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Obtener volumen y estado de mute del sink por defecto
+#current_volume=$(pactl get-sink-volume @DEFAULT_SINK@ | head -n 1)
+#mute_state=$(pactl get-sink-mute @DEFAULT_SINK@)
+#volume=$(echo "$current_volume" | awk '{print $5}' | tr -d '%')
+
+# Si está muteado
+#if [[ $mute_state == *"yes"* ]]; then
+#    echo "  ---"
+#    exit 0
+#fi
+
+# Mantener la misma lógica de tu script original
+#if [ "$volume" -gt "99" ]; then
+#    echo "  $volume%"
+#elif [ "$volume" -gt "65" ]; then
+#    echo "  $volume%"
+#elif [ "$volume" -gt "30" ]; then
+#    echo "  $volume%"
+#elif [ "$volume" -gt "10" ]; then
+#    echo "  $volume%"
+#elif [ "$volume" -gt "0" ]; then
+#    echo "  $volume%"
+#elif [ "$volume" -lt "1" ]; then
+#    echo "  ---"
+#fi
+
+# Dirección MAC de los auriculares
+MAC="84:0F:2A:9A:3D:E5"
+
+# Verifica si están conectados
+CONNECTED=$(bluetoothctl info "$MAC" | grep "Connected: yes")
+
+if [ -n "$CONNECTED" ]; then
+    # Extrae el valor decimal entre paréntesis
+    BATTERY=$(bluetoothctl info "$MAC" | grep "Battery Percentage" | sed -n 's/.*(\([0-9]*\)).*/\1/p')
+
+    # Si se obtuvo batería, mostrarla
+    if [ -n "$BATTERY" ]; then
+        echo "$volume_icon  ${BATTERY}%"
+    else
+        echo "$volume_icon "
+    fi
+else
+    # Si no están conectados, no mostrar nada
+    echo ""
+fi
