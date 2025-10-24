@@ -7,13 +7,13 @@ WALLPAPER_DIR="$HOME/.config/backgrounds/"
 INTERVAL=60
 
 while true; do
-    # Seleccionar un fondo aleatorio
-    WALLPAPER=$(find "$WALLPAPER_DIR" -type f | shuf -n 1)
+  # Seleccionar un fondo aleatorio
+  WALLPAPER=$(find "$WALLPAPER_DIR" -type f | shuf -n 1)
 
-    # Aplicar el fondo a todos los monitores
-    hyprctl hyprpaper reload ,"$WALLPAPER"
+  # Aplicar el fondo a todos los monitores
+  hyprctl hyprpaper reload ,"$WALLPAPER"
 
-    # Esperar el intervalo antes de cambiar de nuevo
-    sleep $INTERVAL
+  # Esperar el intervalo antes de cambiar de nuevo
+  sleep $INTERVAL
 done
 
