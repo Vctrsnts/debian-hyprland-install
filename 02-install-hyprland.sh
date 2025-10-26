@@ -106,13 +106,13 @@ cp $HOME/debian-hyprland-install/custom-configs/bashrc $HOME/.bashrc
 source $HOME/.bashrc
 
 log_success "Copiando scripts de configuración de Hyprland en ~/.config/hypr/hyprland.conf..."
-cp -r ~/debian-hyprland-install/custom-configs/hypr ~/.config/hypr
+# cp -r ~/debian-hyprland-install/custom-configs/hypr ~/.config/hypr
 
 log_success "Copiando scripts de configuración de Greetd en /etc/greetd"
-cp -r ~/debian-hyprland-install/custom-configs/backgrounds ~/.config/backgrounds
+# cp -r ~/debian-hyprland-install/custom-configs/backgrounds ~/.config/backgrounds
 
-log_success "Copiando scripts de configuración de Greetd en /etc/greetd"
-sudo cp -r ~/debian-hyprland-install/custom-configs/greetd /etc/greetd
+# log_success "Copiando scripts de configuración de Greetd en /etc/greetd"
+# sudo cp -r ~/debian-hyprland-install/custom-configs/greetd /etc/greetd
 
 sudo apt -y autoremove
 
