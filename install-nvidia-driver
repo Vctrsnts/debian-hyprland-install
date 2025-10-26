@@ -1,0 +1,150 @@
+Te voy a hacer 4 preguntas, que quiero que me respondas de una en una. Hasta que no valide la pregunta o te diga "pasa a la siguiente" estaras esperando.
+
+Las preguntas son las siguientes:
+ - Con esto ya tendre funcionando los drivers nvidia junto con hyprland y wayland? 
+ - Como puedo saber que los drivers que he instalado se estan usando correctamente?
+ - En el caso de instalar Firefox. Que modificaciones tengo que hacer, para que firefox funcione correctamente en Wayland.
+ - Siguiendo con el tema de Firefox, para que el navegador me use la aceleración por hardware de la GPU y no tire de CPU. Que se tiene que hacer? Se puede crear un script para realizar las modificaciones necesarias?
+ 
+- - - 
+
+ Perfecto, vamos paso a paso.  
+
+### Pregunta 1:  
+**¿Con esto ya tendré funcionando los drivers NVIDIA junto con Hyprland y Wayland?**
+
+Sí, con el script actualizado tendrás el entorno preparado para que Hyprland funcione con tu GPU NVIDIA en Wayland.  
+Los puntos clave que garantizan esto son:  
+
+- **Drivers propietarios instalados** (`nvidia-driver`, `nvidia-dkms`, `nvidia-utils`, `egl-wayland`).  
+- **Desactivación de nouveau** y regeneración de `initramfs`.  
+- **Parámetro `nvidia-drm.modeset=1`** tanto en GRUB como en `/etc/modprobe.d/nvidia.conf`, lo cual es imprescindible para que funcione correctamente el renderizado en Wayland.  
+- **Variables de entorno en Hyprland** (`LIBVA_DRIVER_NAME`, `__GLX_VENDOR_LIBRARY_NAME`, `ELECTRON_OZONE_PLATFORM_HINT`, `NVD_BACKEND`) que aseguran compatibilidad con aplicaciones Wayland, VA-API y Electron.  
+- **Opcional**: soporte de suspensión/hibernación si lo activas.  
+
+Con todo esto, Hyprland debería iniciar en sesión Wayland usando tu GPU NVIDIA sin necesidad de configuraciones adicionales.  
+
+👉 ¿Validamos esta respuesta o quieres que aclare algún detalle antes de pasar a la siguiente?
+ 
+- - - 
+Perfecto, avancemos.  
+
+### Pregunta 2:  
+**¿Cómo puedo saber que los drivers que he instalado se están usando correctamente?**
+
+Hay varias formas de comprobarlo en Debian con NVIDIA + Wayland/Hyprland:
+
+- **Comprobar módulos cargados del kernel**  
+  ```bash
+  lsmod | grep nvidia
+  ```
+  Si ves varias entradas (`nvidia`, `nvidia_drm`, `nvidia_modeset`), significa que el driver propietario está activo.
+
+- **Verificar con `nvidia-smi`**  
+  ```bash
+  nvidia-smi
+  ```
+  Te mostrará la versión del driver, la GPU detectada y los procesos que están usando la GPU.  
+  Si devuelve información de tu Quadro P1000, el driver está funcionando.
+
+- **Confirmar que Wayland está usando EGL de NVIDIA**  
+  ```bash
+  glxinfo | grep "OpenGL renderer"
+  ```
+  (necesitas `mesa-utils`)  
+  Debería mostrar algo como:  
+  ```
+  OpenGL renderer string: NVIDIA Quadro P1000/PCIe/SSE2
+  ```
+
+- **Logs de Xorg/Wayland**  
+  Aunque Hyprland no usa Xorg, puedes revisar el log de arranque de systemd:  
+  ```bash
+  dmesg | grep -i nvidia
+  ```
+  Allí verás si el módulo se cargó correctamente o si hubo errores.
+
+- **Hyprland en ejecución**  
+  Una vez dentro de Hyprland, puedes lanzar:  
+  ```bash
+  echo $XDG_SESSION_TYPE
+  ```
+  y debería devolver `wayland`.  
+  Además, si todo está bien, las aplicaciones gráficas deberían abrirse sin problemas y con aceleración.
+
+---
+
+👉 ¿Quieres que te dé también un **checklist rápido** para validar tras el primer arranque de Hyprland, o con esto es suficiente y pasamos a la siguiente?
+
+- - - 
+
+Genial, seguimos entonces.  
+
+### Pregunta 3:  
+**En el caso de instalar Firefox, ¿qué modificaciones tengo que hacer para que funcione correctamente en Wayland?**
+
+Firefox en Debian suele venir compilado con soporte para Wayland, pero por defecto puede seguir usando XWayland. Para forzarlo a usar Wayland de forma nativa necesitas:
+
+- **Variable de entorno**  
+  Añadir en tu sesión (por ejemplo en `~/.config/environment.d/envvars.conf` o en el `hyprland.conf`):  
+  ```ini
+  MOZ_ENABLE_WAYLAND=1
+  ```  
+  Esto obliga a Firefox a usar el backend Wayland en lugar de X11.
+
+- **Verificación**  
+  Una vez abierto Firefox, en la barra de direcciones escribe:  
+  ```
+  about:support
+  ```  
+  En la sección *Ventana* debería aparecer `Wayland` en lugar de `X11`.
+
+- **Opcional**: si usas múltiples monitores o escalado fraccional, Wayland nativo mejora mucho la integración frente a XWayland.
+
+---
+
+👉 ¿Quieres que además te prepare un pequeño bloque de script que añada automáticamente esta variable de entorno para tu usuario, o prefieres mantenerlo como un ajuste manual?
+
+Sí, exactamente 👍.  
+
+Con **solo añadir** en tu `~/.config/hypr/hyprland.conf` la línea:  
+
+```
+env = MOZ_ENABLE_WAYLAND,1
+```
+
+ya es suficiente para que Firefox arranque en **Wayland nativo** en lugar de XWayland.  
+
+No necesitas exportarlo en `.bashrc`, `.profile` ni en otros sitios, porque Hyprland inyecta esas variables de entorno a todas las aplicaciones que se lancen dentro de la sesión.  
+
+La única recomendación adicional es **verificarlo** después de abrir Firefox en `about:support`, donde en la sección *Ventana* debería aparecer `Wayland`.  
+
+---
+
+👉 ¿Quieres que pasemos ya a la cuarta pregunta sobre la aceleración por hardware en Firefox?
+
+- - - 
+
+Entonces, si tengo el fichero user.js, luego verifico las opciones que me has indicado de about:config:
+ - media.ffmpeg.vaapi.enabled → true
+ - media.rdd-ffmpeg.enabled → true
+ - gfx.webrender.all → true
+ - layers.acceleration.force-enabled → true
+ 
+ 
+- - - 
+
+Exactamente ✅.  
+
+Si después de crear el `user.js` abres Firefox, entras en `about:config` y ves que esas cuatro preferencias aparecen en **true**, significa que el navegador ha leído correctamente tu archivo y está aplicando la configuración.  
+
+El siguiente paso para confirmar que **todo funciona de verdad** es mirar en `about:support` (escribes eso en la barra de direcciones) y revisar:  
+
+- En la sección **Gráficos** debe poner que **WebRender** está habilitado.  
+- En la parte de **Decodificación de vídeo** debería aparecer **VA-API Video Decoding: activo** (o similar).  
+
+Si ambas cosas están presentes, entonces Firefox está usando tu GPU NVIDIA para renderizado y decodificación de vídeo, y no dependerá de la CPU para esas tareas.  
+
+👉 En resumen: si `about:config` refleja los valores en `true` y `about:support` confirma WebRender + VA-API, puedes dar por hecho que todo ha ido bien.  
+
+¿Quieres que te muestre un **par de comandos prácticos** para comprobar desde la terminal si Firefox realmente está usando la GPU al reproducir vídeo?
