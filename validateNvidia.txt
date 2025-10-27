@@ -1,0 +1,77 @@
+Perfecto 🙌. Para que lo tengas todo claro, aquí te dejo una **mini‑checklist manual de validación** con los comandos clave y lo que deberías ver como salida si todo está correcto:
+
+---
+
+## ✅ Checklist de validación rápida
+
+1. **Comprobar que `nouveau` no está cargado**
+   ```bash
+   lsmod | grep nouveau
+   ```
+   - **Salida esperada**: nada (vacío).  
+   - Si aparece, significa que el blacklist no se aplicó.
+
+---
+
+2. **Verificar que el módulo NVIDIA está cargado**
+   ```bash
+   lsmod | grep nvidia
+   ```
+   - **Salida esperada**: varias líneas con `nvidia`, `nvidia_drm`, `nvidia_modeset`.  
+   - Si no aparece nada, el driver no se cargó.
+
+---
+
+3. **Confirmar que DRM modeset está activo**
+   ```bash
+   cat /sys/module/nvidia_drm/parameters/modeset
+   ```
+   - **Salida esperada**: `Y`  
+   - Si devuelve `N`, el parámetro no se aplicó.
+
+---
+
+4. **Comprobar que la GPU responde**
+   ```bash
+   nvidia-smi
+   ```
+   - **Salida esperada**: tabla con información de tu GPU (Quadro P1000), versión del driver y procesos usando la GPU.  
+   - Si da error, el driver no está funcionando.
+
+---
+
+5. **Verificar variables de entorno de Hyprland**
+   ```bash
+   cat ~/.config/environment.d/nvidia.conf
+   ```
+   - **Salida esperada**:  
+     ```
+     WLR_NO_HARDWARE_CURSORS=1
+     WLR_RENDERER=vulkan
+     LIBVA_DRIVER_NAME=nvidia
+     GBM_BACKEND=nvidia-drm
+     __GLX_VENDOR_LIBRARY_NAME=nvidia
+     ```
+   - Confirma que están definidas antes de iniciar sesión en Hyprland.
+
+---
+
+6. **Comprobar que Hyprland está instalado**
+   ```bash
+   command -v Hyprland
+   ```
+   - **Salida esperada**: ruta al binario, normalmente `/usr/bin/Hyprland`.
+
+---
+
+Con estos 6 pasos tienes la validación esencial:  
+- El kernel no carga `nouveau`.  
+- El driver propietario está activo.  
+- DRM modeset está habilitado.  
+- La GPU responde.  
+- Las variables de entorno están listas.  
+- Hyprland está instalado.  
+
+---
+
+¿Quieres que te prepare también una **validación rápida dentro de Hyprland** (por ejemplo, cómo comprobar que Wayland está usando Vulkan y que la aceleración gráfica funciona una vez dentro de la sesión)?
